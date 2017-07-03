@@ -17,8 +17,6 @@ sideLength = 500  #range
 data = np.empty([numComponents*numPoints, dim])
 meanCollect = np.empty(shape = 5)
 covCollect = np.empty(shape = 5)
-meanTruth = np.empty(shape = 5)
-covTruth = np.empty(shape=5)
 
 #generates test data
 for i in np.arange(numComponents):
