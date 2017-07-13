@@ -49,6 +49,7 @@ def compile():
 
 def GMM(X, titleb, titlec):
     lowest_bic = np.infty
+    highest_bic = -1000000000000
     bic = []
     n_components_range = range(1, 7)
     for n_components in n_components_range:
@@ -56,9 +57,16 @@ def GMM(X, titleb, titlec):
         gmm = mixture.GaussianMixture(n_components=n_components)
         gmm.fit(X)
         bic.append(gmm.bic(X))
-        if bic[-1] < lowest_bic:
-            lowest_bic = bic[-1]
-            best_gmm = gmm
+        if bic[-1] > 0:
+            if bic[-1] < lowest_bic:
+                lowest_bic = bic[-1]
+                best_gmm = gmm
+        elif bic[-1] < 0 and not n_components == 1:
+            if bic[-1] > highest_bic:
+                highest_bic = bic[-1]
+                best_gmm = gmm
+
+
 
     bic = np.array(bic)  # plot the BIC
     xvals = np.array([1,2,3,4,5,6])
